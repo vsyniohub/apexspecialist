@@ -8,6 +8,23 @@ public class MaintenanceRequestHelper {
             return Integer.valueOf(reqCycles.get(requestId));
         }
     }
+
+    private static List<Case> getInsertCaseList(List<Case> css) {
+        List<Case> newCaseList = new List<Case>(); 
+        for (Case cs : css) {
+            Case newCS = new Case(
+                Type                = 'Routine Maintenance',
+                Subject             = 'Future Routing Maintenance Request',
+                Equipment__c        = cs.Equipment__c,
+                Date_Reported__c    = Date.today(),
+                Vehicle__c          = cs.Vehicle__c,
+                Date_Due__c         = Date.today().addDays(getMaintenanceCycle(cs.Id))
+            );
+            newCaseList.add(newCS);
+        }
+        return newCaseList;
+    }
+
     public static void createNextMaintenanceRequestWhenClosed(List<Case> closedCases) {
         Set<Id> casesSet            = new Set<Id>();
         List<Case> newCaseList      = new List<Case>();
@@ -31,23 +48,11 @@ public class MaintenanceRequestHelper {
             //because of order by - map will contain the least
         }
         
-        for (Case cs : closedCases) {
-            Case newCS = new Case(
-                Type                = 'Routine Maintenance',
-                Subject             = 'Future Routing Maintenance Request',
-                Equipment__c        = cs.Equipment__c,
-                Date_Reported__c    = Date.today(),
-                Vehicle__c          = cs.Vehicle__c,
-                Date_Due__c         = Date.today().addDays(getMaintenanceCycle(cs.Id))
-            );
-            newCaseList.add(newCS);
-        }
+        newCaseList = getInsertCaseList(closedCases);
 
         if (!newCaseList.isEmpty()) {
             insert newCaseList;
         }
-
-        System.debug('Work List: ' + workPartsToCheck);
     }
     
     public static void updateWorkOrders(){
