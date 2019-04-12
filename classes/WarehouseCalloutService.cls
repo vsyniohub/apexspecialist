@@ -10,16 +10,12 @@ public with sharing class WarehouseCalloutService {
 
         HttpResponse res = new Http().send(req);
 
-        if (res.getStatusCode() != 404 && res.getBody() != null) {
-            return res.getBody();
-        } else {
-            return null;
-        }
+        return res.getBody();
     }
 
     private static void upsertEquipment(List<WarehouseCalloutService.EquipmentResponse> res) {
         List<Product2> equipment = new List<Product2>();
-
+        
         for (WarehouseCalloutService.EquipmentResponse er : res) {
             equipment.add(
                 new Product2(
