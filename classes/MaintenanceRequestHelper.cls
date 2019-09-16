@@ -1,4 +1,6 @@
 public class MaintenanceRequestHelper {
+    private static String ROUTINGMAINTENANCE = 'Routine Maintenance';
+    private static String ROUTINGMAINTENANCEFT = 'Future Routing Maintenance Request';
     public static Map<Id, Decimal> reqCycles {get; set;}
     
     private static Integer getMaintenanceCycle(Id requestId) {
@@ -13,8 +15,8 @@ public class MaintenanceRequestHelper {
         List<Case> newCaseList = new List<Case>(); 
         for (Case cs : css) {
             Case newCS = new Case(
-                Type                = 'Routine Maintenance',
-                Subject             = 'Future Routing Maintenance Request',
+                Type                = ROUTINGMAINTENANCE,
+                Subject             = ROUTINGMAINTENANCEFT,
                 Equipment__c        = cs.Equipment__c,
                 Date_Reported__c    = Date.today(),
                 Vehicle__c          = cs.Vehicle__c,
@@ -54,7 +56,6 @@ public class MaintenanceRequestHelper {
             insert newCaseList;
         }
     }
-    
     /*
     public static void updateWorkOrders(){
         // update workorders
