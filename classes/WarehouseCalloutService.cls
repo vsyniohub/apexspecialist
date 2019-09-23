@@ -1,11 +1,11 @@
 public with sharing class WarehouseCalloutService {
-
+    private static final String GETMETHOD = 'GET';
     private static final String WAREHOUSE_URL = 'https://th-superbadge-apex.herokuapp.com/equipment';
     
     private static String sendRequest() {
         HttpRequest req = new HttpRequest();
 
-        req.setMethod('GET');
+        req.setMethod(GETMETHOD);
         req.setEndpoint(WAREHOUSE_URL);
 
         HttpResponse res = new Http().send(req);
@@ -29,6 +29,7 @@ public with sharing class WarehouseCalloutService {
                 )
             );
         } //for end
+        System.debug(equipment);
         if (!equipment.isEmpty()) {
             upsert equipment Warehouse_SKU__c;
         }
