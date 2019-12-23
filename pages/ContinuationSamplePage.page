@@ -1,0 +1,9 @@
+<apex:page controller="ContinuationUniversalApexController" showChat="false" showHeader="false">
+   <apex:form >
+      <apex:commandButton action="{!getContinuationDataFromGeo}" 
+              value="Start Request" reRender="result" status="commandStatus"/> 
+   </apex:form>
+   <apex:actionStatus startText="In Progress"
+            stopText="No Action" id="commandStatus"/>
+   <apex:outputText id="result" value="{!result}" />
+</apex:page>
