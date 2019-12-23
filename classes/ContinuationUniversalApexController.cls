@@ -1,6 +1,6 @@
 /* *********************************************
  * Class to implement Continuation
- * Documentation 
+ * Documentation/Samples
  * https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_continuation_overview.htm
  * ********************************************* */
 public class ContinuationUniversalApexController {
